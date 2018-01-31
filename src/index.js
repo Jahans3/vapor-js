@@ -1,58 +1,136 @@
+import React from 'react'
+import express from 'express'
+
+const app = express()
+const port = 1337
 const vaporChildrenId = '{V{children}V}'
 
 // Make a Vapor HOC that intercepts children somehow?
+// HOC could intercept children and replace with vaporChildrenId??
 
-// Import from './renderer.js soon
-const renderer = async ({ tree }) => {
-  const { component, data: { children, ...data } } = tree
-  const resolvedData = await component.vaporFetch()
-  const renderChildren = await Promise.all(children.map(async child => renderer({ tree: child })))
-  const renderedComponent = component({ ...data, ...resolvedData })
-  // Replace TemplateRoutes with rendered child components
-  return renderedComponent.replace(vaporChildrenId, renderChildren)
-}
-
-// Basic idea of what Vapor class might look like (may also need to extend React.Component)
+// Basic idea of what Vapor class might look like
+// VaporReact should have it's own equivalent function like this
 class Vapor {
-  static vaporFetch (...args) {
+  constructor (props = {}, staticProps = {}) {
+    if (typeof props !== 'object') {
+      throw new Error(`Vapor: Props should be a plain object, instead found ${typeof props}`)
+    }
+
+    this.props = { ...props, ...staticProps }
+  }
+
+  static vaporFetch () {
     return new Promise(resolve => {
-      setTimeout(() => { resolve({ title: 'Welcome to Vapor!', content: 'Lorem ipsum...' }) }, 500)
+      setTimeout(() => {
+        resolve({ title: 'Welcome to Vapor!', content: 'Lorem ipsum...' })
+      }, 500)
     })
+  }
+
+  hasChildren () {
+    return this.render && this.render().includes(vaporChildrenId)
   }
 }
 
-// Example Vapor component (final will use React)
 class Example extends Vapor {
-  render = ({ title, content } = this.props) => (`
+  render = () => (`
     <div class="example">
-      <h1>${title}</h1>
-      <p>${content}</p>
-      {V{children}V}
+      <h1>${this.props.title}</h1>
+      <p>${this.props.content}</p>
+      ${vaporChildrenId}
     </div>
   `)
 }
 
-;(async function () {
-  const Component = new Example({ content: 'Content wooo' })
-  const props = await Example.vaporFetch()
-  const c = Component.render(props)
+class ChildExample extends Vapor {
+  render = () => (`
+    <div class="child-example">
+        <h3>${this.props.title}</h3>
+        <p>${this.props.content}</p>
+        ${vaporChildrenId}
+    </div>
+  `)
+}
 
-  if (c.match(/{V{children}V}/g)) {
-  // call on children
-  // recursively append children until we get back to top-level Vapor component
-  }
+class ChildExample2 extends Vapor {
+  render = () => (`
+    <div class="child-example-2">
+        <h3>${this.props.title}</h3>
+        <img class="vapor-img" src="${this.props.img}" alt="Vapor">
+    </div>
+  `)
+}
 
-  console.log(c)
-})()
-
-// 1-Deep
 const VaporTree = {
   component: Example,
   props: {
-  title: 'Example Title!',
-  content: 'Lorem ipsum...',
-  children: []
+    title: 'Example Title',
+    content: 'Lorem ipsum...',
+    children: [{
+      component: ChildExample,
+      props: {
+        title: 'Child Example',
+        content: 'Some more content...',
+        children: [{
+          component: ChildExample2,
+          props: {
+            title: 'About Vapor',
+            img: 'http://shopvape.net/wp-content/uploads/2017/06/H%C3%9AT-VAPE-B%E1%BB%8A-S%E1%BA%B6C-V%C3%80-C%C3%81CH-KH%E1%BA%AEC-PH%E1%BB%A4C.jpg'
+          }
+        }]
+      }
+    }, {
+      component: ChildExample,
+      props: {
+        title: 'Child Example',
+        content: 'Some more content...'
+      }
+    }]
   }
 }
 
 // N-Deep
+// The below should happen inside an HOC
+async function renderVapor ({ component, props: { children = [], ...staticProps } = {} }) {
+  const props = await component.vaporFetch()
+  const Component = new component(props, staticProps)
+  const renderedComponent = Component.render()
+  const renderedChildren = await Promise.all(children.map(renderVapor))
+  return renderedComponent.replace(vaporChildrenId, renderedChildren.join('\n'))
+}
+
+// Temporary...
+const generateMarkup = ({ vapor = '', styles = '' }) => (`
+  <html>
+    <head>
+        <title>Vapor</title>
+        <style>${styles}</style>
+    </head>
+    <body>
+        ${vapor}
+    </body>
+  </html>
+`)
+
+const styles = (`
+  .vapor-img {
+    height: 125px;
+    width: 125px;
+  }
+`)
+
+// Just to render something in a browser...
+app.get('*', async (req, res) => {
+  try {
+    const vapor = await renderVapor(VaporTree)
+    const html = generateMarkup({ vapor, styles })
+
+    res.status(200)
+    res.send(html)
+  } catch (err) {
+    res.status(500)
+    res.send(err)
+  }
+})
+
+app.listen(port)
