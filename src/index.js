@@ -9,7 +9,6 @@ const vaporChildrenId = '{V{children}V}'
 // HOC could intercept children and replace with vaporChildrenId??
 
 // Basic idea of what Vapor class might look like
-// VaporReact should have it's own equivalent function like this
 class Vapor {
   constructor (props = {}, staticProps = {}) {
     if (typeof props !== 'object') {
@@ -28,7 +27,7 @@ class Vapor {
   }
 
   hasChildren () {
-    return this.render && this.render().includes(vaporChildrenId)
+    return this.render().includes(vaporChildrenId)
   }
 }
 
@@ -89,8 +88,8 @@ const VaporTree = {
   }
 }
 
-// N-Deep
-// The below should happen inside an HOC
+// The below should happen inside an HOC in the client (React components anyway)
+// VaporReact should have it's own equivalent function like this for SSR
 async function renderVapor ({ component, props: { children = [], ...staticProps } = {} }) {
   const props = await component.vaporFetch()
   const Component = new component(props, staticProps)
