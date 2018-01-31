@@ -3,5 +3,14 @@
   "version": "0.0.0",
   "main": "src/index.js",
   "author": "Joshua Jahans",
-  "license": "MIT"
+  "scripts": {
+    "start": "babel-node ./src/index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
 }

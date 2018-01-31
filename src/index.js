@@ -15,10 +15,10 @@ const renderer = async ({ tree }) => {
 // Basic idea of what Vapor class might look like (may also need to extend React.Component)
 class Vapor {
   static vaporFetch (...args) {
-  return new Promise(resolve => {
-  setTimeout(() => { resolve({ title: 'Welcome to Vapor!', content: 'Lorem ipsum...' }) }, 500)
-})
-}
+    return new Promise(resolve => {
+      setTimeout(() => { resolve({ title: 'Welcome to Vapor!', content: 'Lorem ipsum...' }) }, 500)
+    })
+  }
 }
 
 // Example Vapor component (final will use React)
@@ -30,9 +30,9 @@ class Example extends Vapor {
       {V{children}V}
     </div>
   `)
-  }
+}
 
-  ;(async function () {
+;(async function () {
   const Component = new Example({ content: 'Content wooo' })
   const props = await Example.vaporFetch()
   const c = Component.render(props)
@@ -43,16 +43,16 @@ class Example extends Vapor {
   }
 
   console.log(c)
-  })()
+})()
 
 // 1-Deep
-  const VaporTree = {
+const VaporTree = {
   component: Example,
   props: {
   title: 'Example Title!',
   content: 'Lorem ipsum...',
   children: []
   }
-  }
+}
 
 // N-Deep
