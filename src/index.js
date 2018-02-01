@@ -44,9 +44,9 @@ class Example extends Vapor {
 class ChildExample extends Vapor {
   render = () => (`
     <div class="child-example">
-        <h3>${this.props.title}</h3>
-        <p>${this.props.content}</p>
-        ${vaporChildrenId}
+      <h3>${this.props.title}</h3>
+      <p>${this.props.content}</p>
+      ${vaporChildrenId}
     </div>
   `)
 }
@@ -54,8 +54,8 @@ class ChildExample extends Vapor {
 class ChildExample2 extends Vapor {
   render = () => (`
     <div class="child-example-2">
-        <h3>${this.props.title}</h3>
-        <img class="vapor-img" src="${this.props.img}" alt="Vapor">
+      <h3>${this.props.title}</h3>
+      <img class="vapor-img" src="${this.props.img}" alt="Vapor">
     </div>
   `)
 }
@@ -102,8 +102,8 @@ async function renderVapor ({ component, props: { children = [], ...staticProps 
 const generateMarkup = ({ vapor = '', styles = '' }) => (`
   <html>
     <head>
-        <title>Vapor</title>
-        <style>${styles}</style>
+      <title>Vapor</title>
+      <style>${styles}</style>
     </head>
     <body>
         ${vapor}
