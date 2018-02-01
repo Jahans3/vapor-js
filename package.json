@@ -4,7 +4,8 @@
   "main": "src/index.js",
   "author": "Joshua Jahans",
   "scripts": {
-    "start": "nodemon ./src/index.js --exec babel-node"
+    "start": "babel-node ./src/index.js --exec babel-node",
+    "dev": "nodemon ./src/index.js --exec babel-node"
   },
   "license": "MIT",
   "devDependencies": {

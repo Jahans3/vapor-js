@@ -1,8 +1,7 @@
-import React from 'react'
-import express from 'express'
-
-const app = express()
-const port = 1337
+// import React from 'react'
+// import express from 'express'
+// const app = express()
+// const port = 1337
 
 /*
   TODO
@@ -130,18 +129,23 @@ const styles = (`
   }
 `)
 
+export default async () => {
+  const vapor = await renderVapor(VaporTree)
+  return generateMarkup({ vapor, styles })
+}
+
 // Just to render something in a browser...
-app.get('*', async (req, res) => {
-  try {
-    const vapor = await renderVapor(VaporTree)
-    const html = generateMarkup({ vapor, styles })
-
-    res.status(200)
-    res.send(html)
-  } catch (err) {
-    res.status(500)
-    res.send(err)
-  }
-})
-
-app.listen(port)
+// app.get('*', async (req, res) => {
+//   try {
+//     const vapor = await renderVapor(VaporTree)
+//     const html = generateMarkup({ vapor, styles })
+//
+//     res.status(200)
+//     res.send(html)
+//   } catch (err) {
+//     res.status(500)
+//     res.send(err)
+//   }
+// })
+//
+// app.listen(port)
