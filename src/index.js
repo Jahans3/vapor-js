@@ -106,7 +106,7 @@ const generateMarkup = ({ vapor = '', styles = '' }) => (`
       <style>${styles}</style>
     </head>
     <body>
-        ${vapor}
+      ${vapor}
     </body>
   </html>
 `)
