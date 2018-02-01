@@ -71,6 +71,18 @@ class ChildExample2 extends Vapor {
   `)
 }
 
+/*
+  TODO
+  In future instead of a deeply nested tree of components, props and children
+  each object contains a component and a list of URLs.
+
+  The URLs will always represent children to be fetched, this is needed for the server-side rendering,
+  in the client however <FetchComponent /> will fetch the children.
+
+  VaporTree objects should be simple and concise, eg. { component: ExampleComponent, urls: ['...', '...', '...'] }
+
+  1 VaporTree = 1 Vapor component
+ */
 const VaporTree = {
   component: Example,
   props: {

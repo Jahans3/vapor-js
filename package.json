@@ -1,11 +1,12 @@
 {
   "name": "vapor",
   "version": "0.0.0",
-  "main": "src/index.js",
+  "main": "vapor.js",
   "author": "Joshua Jahans",
   "scripts": {
     "start": "babel-node ./src/index.js --exec babel-node",
-    "dev": "nodemon ./src/index.js --exec babel-node"
+    "dev": "nodemon ./src/index.js --exec babel-node",
+    "build": "babel ./src/index.js --out-file vapor.js"
   },
   "license": "MIT",
   "devDependencies": {
