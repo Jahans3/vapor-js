@@ -11,6 +11,7 @@ import type { Component, Children, Props, Node } from './types'
  */
 function V (component: Component, props: Props, ...children: Children): Node {
   return {
+    id: JSON.stringify({ component, props, children }),
     component,
     props,
     children
@@ -26,7 +27,7 @@ function V (component: Component, props: Props, ...children: Children): Node {
 function changed  (newNode: Node, oldNode: Node): boolean {
   return typeof newNode !== typeof oldNode || // If node1 is in any way different to node2
     typeof newNode === 'string' && newNode !== oldNode || // If both nodes are strings but are different
-    typeof newNode.type !== oldNode.type // If both are Vapor components but types arold
+    typeof newNode.type !== oldNode.type // If both are Vapor components but are different
 }
 /**
  * Update a node
