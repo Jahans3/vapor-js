@@ -18,4 +18,6 @@ const Vtree = (
   </ul>
 )
 
+console.log(Vtree)
+
 render(Vtree, document.getElementById('root'))
