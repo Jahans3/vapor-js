@@ -106,5 +106,7 @@ function render (app: Node, root: Object): void {
 export default V
 export {
   createNode,
-  render
+  render,
+  updateNode,
+  changed
 }

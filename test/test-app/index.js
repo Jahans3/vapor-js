@@ -1,5 +1,5 @@
 // @flow
-import V, { render } from '../../src/packages/virtual-dom'
+import V, { render, updateNode } from '../../src/packages/virtual-dom'
 
 /*
   TODO
@@ -10,10 +10,11 @@ const ArbitraryComponent = ({ children }) => (
 )
 
 const Vtree = (
-  <ul className='v-list' arbitraryProp={(() => 'I should exist!')()}>
-    <li className='v-list-item'>Item 1</li>
-    <li className='v-list-item'>Item 2</li>
-    <li className='v-list-item'>Item 3</li>
+  <ul className='v-list'>
+    <li className='list-item'>Item 1</li>
+    <li className='list-item'>Item 2</li>
+    <li className='list-item'>Item 3</li>
+    <li className='list-item'>Item 4</li>
   </ul>
 )
 
