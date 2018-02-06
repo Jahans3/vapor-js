@@ -6,20 +6,24 @@
   "scripts": {
     "start": "babel-node ./src/index.js --exec babel-node",
     "dev": "nodemon ./src/index.js --exec babel-node",
-    "build": "babel ./src/index.js --out-file vapor.js"
+    "build": "babel ./src/index.js --out-file vapor.js",
+
+    "compile-virtual-dom": "babel ./lib/virtual-dom/index.js"
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "nodemon": "^1.14.11"
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "nodemon": "1.14.11"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "preact": "^8.2.7",
-    "react": "^16.2.0"
+    "babel-plugin-transform-react-jsx": "6.24.1",
+    "express": "4.16.2",
+    "flow-bin": "0.59.0",
+    "preact": "8.2.7",
+    "react": "16.2.0"
   }
 }
