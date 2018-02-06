@@ -2,6 +2,8 @@
   "plugins": [
     ["transform-react-jsx", {
       "pragma": "V"
-    }]
+    }],
+    "transform-object-rest-spread",
+    "transform-es2015-modules-commonjs"
   ]
 }

@@ -7,13 +7,14 @@
     "start": "babel-node ./src/index.js --exec babel-node",
     "dev": "nodemon ./src/index.js --exec babel-node",
     "build": "babel ./src/index.js --out-file vapor.js",
-
-    "compile-virtual-dom": "babel ./lib/virtual-dom/index.js"
+    "compile-virtual-dom": "babel ./lib/virtual-dom/index.js --out-file virtual-dom.js"
   },
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
@@ -23,7 +24,6 @@
     "babel-plugin-transform-react-jsx": "6.24.1",
     "express": "4.16.2",
     "flow-bin": "0.59.0",
-    "preact": "8.2.7",
-    "react": "16.2.0"
+    "preact": "8.2.7"
   }
 }
