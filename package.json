@@ -13,6 +13,9 @@
     "compile-test-app": "webpack --config webpack/test-app.js"
   },
   "license": "MIT",
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-eslint": "8.2.1",
@@ -25,6 +28,7 @@
     "babel-preset-flow": "6.23.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
+    "eslint": "4.17.0",
     "eslint-config-standard": "11.0.0-beta.0",
     "eslint-config-standard-jsx": "4.0.2",
     "eslint-plugin-flowtype": "2.42.0",

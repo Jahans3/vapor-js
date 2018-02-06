@@ -1,6 +1,6 @@
 // @flow
 
-export type Props = string | Array<Object>
+export type Props = Object
 export type Node = string | number | {
   id: ?string,
   component: Component,

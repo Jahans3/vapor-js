@@ -11,7 +11,7 @@ import type { Component, Children, Props, Node } from './types'
  * @returns {{id: *, component: Component, props: Vapor.props, children: Children[]}}
  * @constructor
  */
-function Vapor (component: Component, props: Props, ...children: Children): Node {
+function Vapor (component: Component, props: Props = {}, ...children: Children): Node {
   return {
     id: encode(JSON.stringify({ component, props, children })),
     component,
@@ -120,7 +120,6 @@ function createNode (node: Node): Object {
   /*
     TODO
     - Create an ID to cache each component against - just stringify node.component + node.props (or stringify entire node???)
-        - Is it worth base64'ing the ID? Potential to reduce memory usage per component by up to 1/4?
     - Check local cache to see if node has already been rendered
     - If no cached component is found then generate the component
     - If cached component is found pull it from storage (need good pattern/convention for storing components)
