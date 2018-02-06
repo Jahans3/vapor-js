@@ -1,6 +1,9 @@
 // @flow
 
-function V (component, props, ...children) {
+type Component = string | Function
+type Props = string | Array<Object>
+
+function V (component: Component, props: Props, ...children: ): { component: Component, props: Props, children} {
   return {
     component,
     props,
@@ -10,13 +13,18 @@ function V (component, props, ...children) {
 
 function createNode (node) {
   if (typeof node === 'string') {
-    return document.createElement
+    return document.createTextNode(node)
   }
 
-  const { component, children } = node
-  const element = document.createElement(component)
+  /*
+    TODO
+    - Check local cache to see if node has already been rendered
+    - If no cached component is found then generate the component
+    - If cached component is found pull it from storage (need good pattern/convention for storing components)
+   */
+  const element = document.createElement(node.component)
 
-  children.map(createNode)
+  node.children.map(createNode)
 
   return element
 }
