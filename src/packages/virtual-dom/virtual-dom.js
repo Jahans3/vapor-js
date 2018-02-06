@@ -20,9 +20,16 @@ function createNode (node: Node): Object {
     - If no cached component is found then generate the component
     - If cached component is found pull it from storage (need good pattern/convention for storing components)
    */
+  if (typeof node.component === 'function') {
+    node.component = node.component(node.children)
+    return createNode(node)
+  }
+
   const element = document.createElement(node.component)
 
-  node.children.map(function (child) { element.appendChild(createNode(child)) })
+  node.children.map(function (child) {
+    element.appendChild(createNode(child))
+  })
 
   return element
 }
