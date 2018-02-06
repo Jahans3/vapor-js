@@ -87,7 +87,7 @@ function createNode (node: Node): Object {
 
   const $element: Object = document.createElement(node.component)
 
-  node.children.map(function (child) {
+  node.children.map(function (child: Node): void {
     $element.appendChild(createNode(child))
   })
 
