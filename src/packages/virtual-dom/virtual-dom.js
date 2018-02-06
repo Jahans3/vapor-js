@@ -51,7 +51,7 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
     $parent.replaceChild(createNode(newNode), $parent.childNodes[index])
 
   // If new node is an element (not a string)
-  } else if (newNode.type) {
+  } else if (newNode.component) {
     const newLength: number = newNode.children.length
     const oldLength: number = oldNode.children.length
 
