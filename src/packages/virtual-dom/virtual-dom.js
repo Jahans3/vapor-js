@@ -1,5 +1,6 @@
 // @flow
 import { encode } from 'base-64'
+import store from 'store'
 import type { Component, Children, Props, Node } from './types'
 
 /**
@@ -71,6 +72,16 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
         i
       )
     }
+  }
+}
+
+/**
+ * Cache a
+ * @param node
+ */
+function cacheNode (node: Node): void {
+  if (!store.get(node.id)) {
+    store.set(node.id, createNode(node))
   }
 }
 
