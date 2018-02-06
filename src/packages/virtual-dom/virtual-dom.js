@@ -50,10 +50,10 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
 
   // If new node is an element (not a string)
   } else if (newNode.type) {
-    const newLength = newNode.children.length
-    const oldLength = oldNode.children.length
+    const newLength: number = newNode.children.length
+    const oldLength: number = oldNode.children.length
 
-    for (let i = 0; i < newLength || i < oldLength; i++) {
+    for (let i: number = 0; i < newLength || i < oldLength; i++) {
       updateNode(
         $parent.childNodes[index],
         newNode.children[i],
