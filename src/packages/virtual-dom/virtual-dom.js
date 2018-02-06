@@ -108,7 +108,7 @@ function getCachedNode (node: Node): Object {
 }
 
 /**
- * Create a node
+ * Create a node or retrieve an identical cached version
  * @param node
  * @returns {*}
  */
@@ -146,12 +146,28 @@ function createNode (node: Node): Object {
 }
 
 /**
+ * Temporary
+ * Used to set innerHTML and act as a reminder it can be harmful
+ * @param root
+ * @param node
+ */
+function dangerouslySetInnerHTML (root: Object, node: string): void {
+  root.innerHTML = node
+}
+
+/**
  * Render a Vapor app to the DOM
  * @param app
  * @param root
  */
 function render (app: Node, root: Object): void {
-  root.appendChild(createNode(app))
+  const $node = createNode(app)
+
+  if (typeof $node === 'string') {
+    dangerouslySetInnerHTML(root, $node)
+  } else {
+    root.appendChild($node)
+  }
 }
 
 export default Vapor
