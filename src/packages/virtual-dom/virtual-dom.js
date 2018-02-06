@@ -44,10 +44,16 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
 
   // If no old node or new node exist
   } else if (!newNode) {
-    $parent.removeChild($parent.childNodes[index])
+    const childNode: Object = $parent.childNodes[index]
+
+    if (childNode) {
+      $parent.removeChild(childNode)
+    }
 
   // If the node has changed
   } else if (changed(newNode, oldNode)) {
+    // TODO
+    // If an element is removed and we later try to swap it we get a type error
     $parent.replaceChild(createNode(newNode), $parent.childNodes[index])
 
   // If new node is an element (not a string)
