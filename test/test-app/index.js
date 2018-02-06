@@ -10,19 +10,28 @@ const ArbitraryComponent = ({ children }) => (
 
 const Vtree = (
   <ul className='v-list'>
-    <li className='list-item'>Item 1</li>
-    <li className='list-item'>Item 2</li>
-    <li className='list-item'>Item 3</li>
-    <li className='list-item'>Item 4</li>
+
   </ul>
 )
 
-console.log(Vtree)
 const $root = document.getElementById('root')
 
-let i = 4
-document.getElementById('update-list').addEventListener('click', e => {
-  updateNode($root, <li>Item {++i}</li>)
-})
-
 render(Vtree, $root)
+
+console.log(Vtree)
+
+createAddButton()
+createRemoveButton()
+
+function createRemoveButton () {
+  document.getElementById('update-list-remove').addEventListener('click', function () {
+    updateNode($root)
+  })
+}
+
+function createAddButton () {
+  let i = 0
+  document.getElementById('update-list-add').addEventListener('click', function () {
+    updateNode($root, <div>Div {++i}</div>)
+  })
+}

@@ -39,7 +39,7 @@ function changed  (newNode: Node, oldNode: Node): boolean {
  */
 function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: number = 0): void {
   // If no old node exists
-  if (!oldNode) {
+  if (newNode && !oldNode) {
     $parent.appendChild(createNode(newNode))
 
   // If no old node or new node exist
