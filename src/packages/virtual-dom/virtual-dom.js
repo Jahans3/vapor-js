@@ -1,9 +1,7 @@
 // @flow
+import type { Component, Children, Props, Node } from './types'
 
-type Component = string | Function
-type Props = string | Array<Object>
-
-function V (component: Component, props: Props, ...children: ): { component: Component, props: Props, children} {
+function V (component: Component, props: Props, ...children: Children): Node {
   return {
     component,
     props,
@@ -11,7 +9,7 @@ function V (component: Component, props: Props, ...children: ): { component: Com
   }
 }
 
-function createNode (node) {
+function createNode (node: Node): Object {
   if (typeof node === 'string') {
     return document.createTextNode(node)
   }
@@ -24,12 +22,12 @@ function createNode (node) {
    */
   const element = document.createElement(node.component)
 
-  node.children.map(createNode)
+  node.children.map(function (child) { element.appendChild(createNode(child)) })
 
   return element
 }
 
-function render (app, root) {
+function render (app: Node, root: Object): void {
   root.appendChild(createNode(app))
 }
 
