@@ -31,5 +31,8 @@
     "flow-bin": "0.59.0",
     "nodemon": "1.14.11",
     "webpack": "3.10.0"
+  },
+  "dependencies": {
+    "webpack-merge": "4.1.1"
   }
 }
