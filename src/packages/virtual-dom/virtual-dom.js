@@ -76,6 +76,7 @@ function createNode (node: Node): Object {
 
   /*
     TODO
+    - Create an ID to cache each component against - just stringify node.component + node.props (or stringify entire node???)
     - Check local cache to see if node has already been rendered
     - If no cached component is found then generate the component
     - If cached component is found pull it from storage (need good pattern/convention for storing components)
