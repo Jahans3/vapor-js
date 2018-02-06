@@ -19,16 +19,15 @@ function V (component: Component, props: Props, ...children: Children): Node {
 
 /**
  * Check if a node has updated
- * @param oldNode
  * @param newNode
+ * @param oldNode
  * @returns {boolean}
  */
-function changed (oldNode: Node, newNode: Node): boolean {
-  return typeof oldNode !== typeof newNode || // If node1 is in any way different to node2
-    typeof oldNode === 'string' && oldNode !== newNode || // If both nodes are strings but are different
-    typeof oldNode.type !== newNode.type // If both are Vapor components but types are
+function changed  (newNode: Node, oldNode: Node): boolean {
+  return typeof newNode !== typeof oldNode || // If node1 is in any way different to node2
+    typeof newNode === 'string' && newNode !== oldNode || // If both nodes are strings but are different
+    typeof newNode.type !== oldNode.type // If both are Vapor components but types arold
 }
-
 /**
  * Update a node
  * @param $parent
@@ -37,10 +36,31 @@ function changed (oldNode: Node, newNode: Node): boolean {
  * @param index
  */
 function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: number = 0): void {
+  // If no old node exists
   if (!oldNode) {
     $parent.appendChild(createNode(newNode))
+
+  // If no old node or new node exist
   } else if (!newNode) {
     $parent.removeChild($parent.childNodes[index])
+
+  // If the node has changed
+  } else if (changed(newNode, oldNode)) {
+    $parent.replaceChild(createNode(newNode), $parent.childNodes[index])
+
+  // If new node is an element (not a string)
+  } else if (newNode.type) {
+    const newLength = newNode.children.length
+    const oldLength = oldNode.children.length
+
+    for (let i = 0; i < newLength || i < oldLength; i++) {
+      updateNode(
+        $parent.childNodes[index],
+        newNode.children[i],
+        oldNode.children[i],
+        i
+      )
+    }
   }
 }
 
