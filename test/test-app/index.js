@@ -1,4 +1,4 @@
-import V, { render, updateNode } from '../../src/packages/virtual-dom'
+import Vapor, { render, updateNode } from '../../src/packages/virtual-dom'
 
 /*
   TODO

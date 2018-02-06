@@ -10,7 +10,7 @@ import type { Component, Children, Props, Node } from './types'
  * @returns {{component: Component, props: V.props, children: Children[]}}
  * @constructor
  */
-function V (component: Component, props: Props, ...children: Children): Node {
+function Vapor (component: Component, props: Props, ...children: Children): Node {
   return {
     id: encode(JSON.stringify({ component, props, children })),
     component,
@@ -107,7 +107,7 @@ function render (app: Node, root: Object): void {
   root.appendChild(createNode(app))
 }
 
-export default V
+export default Vapor
 export {
   createNode,
   render,
