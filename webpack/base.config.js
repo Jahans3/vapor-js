@@ -1,7 +1,7 @@
 const path = require('path')
 
-module.exports = ({ name, path = 'src' }) => ({
-  entry: `./${path}/${name}/index.js`,
+module.exports = ({ name, path: filePath = 'src' }) => ({
+  entry: `./${filePath}/${name}/index.js`,
   output: {
     path: path.join(__dirname, `../lib/${name}`),
     filename: `${name}.js`
