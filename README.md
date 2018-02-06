@@ -5,6 +5,7 @@ An atomic, lightweight client- and server-rendered web application framework tha
 Vapor for React.
 
 ### Installation
+Install `vapor-js` with your favourite package manager:
 ```
 yarn add vapor-js
 ```
