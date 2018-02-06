@@ -76,13 +76,33 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
 }
 
 /**
- * Cache a
+ * Cache a node
  * @param node
  */
 function cacheNode (node: Node): void {
+  const nodeString: string = document.createElement(String(node.component)).outerHTML
+
   if (!store.get(node.id)) {
-    store.set(node.id, createNode(node))
+    store.set(node.id, nodeString)
   }
+}
+
+/**
+ * Check if a node is cached
+ * @param node
+ * @returns {boolean}
+ */
+function nodeCached (node: Node): boolean {
+  return !!store.get(node.id)
+}
+
+/**
+ * Get a cached node
+ * @param node
+ * @returns {*}
+ */
+function getCachedNode (node: Node): Object {
+  return store.get(node.id)
 }
 
 /**
@@ -103,6 +123,12 @@ function createNode (node: Node): Object {
     - If no cached component is found then generate the component
     - If cached component is found pull it from storage (need good pattern/convention for storing components)
    */
+  if (nodeCached(node)) {
+    return getCachedNode(node)
+  } else {
+    cacheNode(node)
+  }
+
   if (typeof node.component === 'function') {
     node.component = node.component(node.children)
     return createNode(node)
