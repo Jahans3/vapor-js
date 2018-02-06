@@ -94,6 +94,11 @@ function createNode (node: Node): Object {
   return $element
 }
 
+/**
+ * Render a Vapor app to the DOM
+ * @param app
+ * @param root
+ */
 function render (app: Node, root: Object): void {
   root.appendChild(createNode(app))
 }
