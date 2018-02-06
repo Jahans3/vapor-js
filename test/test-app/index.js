@@ -1,4 +1,3 @@
-// @flow
 import V, { render, updateNode } from '../../src/packages/virtual-dom'
 
 /*
@@ -19,5 +18,11 @@ const Vtree = (
 )
 
 console.log(Vtree)
+const $root = document.getElementById('root')
 
-render(Vtree, document.getElementById('root'))
+let i = 4
+document.getElementById('update-list').addEventListener('click', e => {
+  updateNode($root, <li>Item {++i}</li>)
+})
+
+render(Vtree, $root)

@@ -1,7 +1,7 @@
 // @flow
 
 export type Props = string | Array<Object>
-export type Node = string | {
+export type Node = string | number | {
   component: Component,
   props: ?Props,
   children: Array<Node>

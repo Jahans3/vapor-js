@@ -70,8 +70,8 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
  * @returns {*}
  */
 function createNode (node: Node): Object {
-  if (typeof node === 'string') {
-    return document.createTextNode(node)
+  if (typeof node === 'string' || typeof node === 'number') {
+    return document.createTextNode(String(node))
   }
 
   /*
