@@ -37,5 +37,8 @@
     "nodemon": "1.14.11",
     "webpack": "3.10.0",
     "webpack-merge": "4.1.1"
+  },
+  "dependencies": {
+    "base-64": "0.1.0"
   }
 }

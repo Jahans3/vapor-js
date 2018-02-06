@@ -1,4 +1,5 @@
 // @flow
+import { encode } from 'base-64'
 import type { Component, Children, Props, Node } from './types'
 
 /**
@@ -11,7 +12,7 @@ import type { Component, Children, Props, Node } from './types'
  */
 function V (component: Component, props: Props, ...children: Children): Node {
   return {
-    id: JSON.stringify({ component, props, children }),
+    id: encode(JSON.stringify({ component, props, children })),
     component,
     props,
     children
