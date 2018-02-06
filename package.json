@@ -7,7 +7,11 @@
     "start": "babel-node ./src/index.js --exec babel-node",
     "dev": "nodemon ./src/index.js --exec babel-node",
     "build": "babel ./src/index.js --out-file vapor.js",
+
+    "test": "node ./test",
+
     "compile-virtual-dom": "webpack --config webpack/virtual-dom.js",
+    "compile-babel-plugin": "",
     "compile-test-app": "webpack --config webpack/test-app.js"
   },
   "license": "MIT",

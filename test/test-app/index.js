@@ -8,3 +8,5 @@ const v_tree = (
     <li className='v-list-item'>Item 3</li>
   </ul>
 )
+
+console.log(v_tree)
