@@ -1,4 +1,5 @@
 {
+  "presets": ["flow"],
   "plugins": [
     ["transform-react-jsx", {
       "pragma": "V"
