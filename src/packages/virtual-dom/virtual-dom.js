@@ -7,7 +7,7 @@ import type { Component, Children, Props, Node } from './types'
  * @param component
  * @param props
  * @param children
- * @returns {{component: Component, props: V.props, children: Children[]}}
+ * @returns {{id: *, component: Component, props: Vapor.props, children: Children[]}}
  * @constructor
  */
 function Vapor (component: Component, props: Props, ...children: Children): Node {
