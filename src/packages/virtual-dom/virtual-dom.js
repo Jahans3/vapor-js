@@ -1,7 +1,9 @@
 // @flow
 
-export default (component, props, ...children) => ({
+const V = (component, props, ...children) => ({
   component,
   props,
   children
 })
+
+export default V
