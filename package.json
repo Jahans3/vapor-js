@@ -44,6 +44,8 @@
   },
   "dependencies": {
     "base-64": "0.1.0",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
     "store": "2.0.12"
   }
 }
