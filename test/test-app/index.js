@@ -2,6 +2,13 @@ import Vapor, { render, updateNode } from '../../src/packages/virtual-dom'
 
 /*
   TODO
+  ReactVapor
+  Each Vapor component is a react app
+  All apps subscribe to the same store
+ */
+
+/*
+  TODO
   Arbitrary/custom components
  */
 const ArbitraryComponent = ({ children }) => (
@@ -35,12 +42,13 @@ createRemoveButton()
 createSwapButton()
 
 function createSwapButton () {
-  let originalPostion = true
+  let originalPosition = true
+
   document.getElementById('update-list-swap').addEventListener('click', function () {
-    if (originalPostion) updateNode($root, Vtree2, Vtree)
+    if (originalPosition) updateNode($root, Vtree2, Vtree)
     else updateNode($root, Vtree, Vtree2)
 
-    originalPostion = !originalPostion
+    originalPosition = !originalPosition
   })
 }
 
@@ -52,6 +60,7 @@ function createRemoveButton () {
 
 function createAddButton () {
   let i = 0
+
   document.getElementById('update-list-add').addEventListener('click', function () {
     updateNode($root, <div>Div {++i}</div>)
   })

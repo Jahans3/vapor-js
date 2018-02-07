@@ -26,12 +26,13 @@ function Vapor (component: Component, props: Props = {}, ...children: Children):
  * @param oldNode
  * @returns {boolean}
  */
-function changed  (newNode: Node, oldNode: Node): boolean {
+function changed (newNode: Node, oldNode: Node): boolean {
+  return newNode.id !== oldNode.id
   // TODO
   // Use node.id to do simple diff
-  return typeof newNode !== typeof oldNode || // If node1 is in any way different to node2
-    typeof newNode === 'string' && newNode !== oldNode || // If both nodes are strings but are different
-    typeof newNode.component !== oldNode.component // If both are Vapor components but are different
+  // return typeof newNode !== typeof oldNode || // If node1 is in a different type to node2
+  //   (typeof newNode === 'string' && newNode !== oldNode) || // If both nodes are strings but are different
+  //   typeof newNode.component !== typeof oldNode.component // If both are Vapor components but are different
 }
 /**
  * Update a node
@@ -82,10 +83,10 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
  * @param node
  */
 function cacheNode (node: Node): void {
-  const nodeString: string = document.createElement(String(node.component)).outerHTML
+  const $node: string = document.createElement(node.component)
 
   if (!store.get(node.id)) {
-    store.set(node.id, nodeString)
+    store.set(node.id, $node)
   }
 }
 
@@ -124,11 +125,11 @@ function createNode (node: Node): Object {
     - If no cached component is found then generate the component
     - If cached component is found pull it from storage (need good pattern/convention for storing components)
    */
-  if (nodeCached(node)) {
-    return getCachedNode(node)
-  } else {
-    cacheNode(node)
-  }
+  // if (nodeCached(node)) {
+  //   return getCachedNode(node)
+  // } else {
+  //   cacheNode(node)
+  // }
 
   if (typeof node.component === 'function') {
     node.component = node.component(node.children)
@@ -138,7 +139,8 @@ function createNode (node: Node): Object {
   const $element: Object = document.createElement(node.component)
 
   node.children.map(function (child: Node): void {
-    $element.appendChild(createNode(child))
+    const $tn = createNode(child)
+    $element.appendChild($tn)
   })
 
   return $element
