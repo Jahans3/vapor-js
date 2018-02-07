@@ -21,12 +21,14 @@
     "babel-eslint": "8.2.1",
     "babel-loader": "7.1.2",
     "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-env": "1.6.1",
     "babel-preset-flow": "6.23.0",
-    "babel-preset-react": "6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "eslint": "4.17.0",
     "eslint-config-standard": "11.0.0-beta.0",
@@ -46,6 +48,7 @@
     "base-64": "0.1.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
+    "react-html-parser": "^2.0.2",
     "store": "2.0.12"
   }
 }
