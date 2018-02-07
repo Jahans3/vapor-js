@@ -108,6 +108,28 @@ function getCachedNode (node: Node): Object {
 }
 
 /**
+ * Map a JSX prop name to DOM node attrobute names
+ * @param prop
+ */
+function mapPropNames (prop: string): string {
+  const map = { className: 'class' }
+  return map[prop] || prop
+}
+
+/**
+ * Apply JSX props to DOM node
+ * @param $target
+ * @param props
+ */
+function applyProps ($target: Object, props: Props = {}): void {
+  for (const prop in props) {
+    if (props.hasOwnProperty(prop)) {
+      $target.setAttribute(mapPropNames(prop), props[prop])
+    }
+  }
+}
+
+/**
  * Create a node or retrieve an identical cached version
  * @param node
  * @returns {*}
@@ -136,6 +158,8 @@ function createNode (node: Node): Object {
   }
 
   const $element: Object = document.createElement(node.component)
+
+  applyProps($element, node.props)
 
   node.children.map(function (child: Node): void {
     const $tn = createNode(child)
