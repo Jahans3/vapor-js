@@ -117,6 +117,20 @@ function mapPropNames (prop: string): string {
 }
 
 /**
+ * Apply boolean props to DOM nodes
+ * @param $target
+ * @param prop
+ * @param value
+ */
+function applyBooleanProp ($target: Node, prop, value): void {
+  if (value) {
+    $target.setAttribute(prop, value)
+  }
+
+  $target[prop] = value
+}
+
+/**
  * Apply JSX props to DOM node
  * @param $target
  * @param props
@@ -124,7 +138,11 @@ function mapPropNames (prop: string): string {
 function applyProps ($target: Object, props: Props = {}): void {
   for (const prop in props) {
     if (props.hasOwnProperty(prop)) {
-      $target.setAttribute(mapPropNames(prop), props[prop])
+      if (typeof props[prop] === 'boolean') {
+        applyBooleanProp($target, prop, props[prop])
+      } else {
+        $target.setAttribute(mapPropNames(prop), props[prop])
+      }
     }
   }
 }
@@ -145,6 +163,9 @@ function createNode (node: Node): Object {
     - Check local cache to see if node has already been rendered
     - If no cached component is found then generate the component
     - If cached component is found pull it from storage (need good pattern/convention for storing components)
+
+    - Above complete, need to apply document fragments to DOM elements now
+        - Have to store as strings and convert to fragments to preserve attributes
    */
   // if (nodeCached(node)) {
   //   return getCachedNode(node)

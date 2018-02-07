@@ -17,10 +17,11 @@ const ArbitraryComponent = ({ children }) => (
 
 const Vtree = (
   <ul className='v-list'>
-    <li href='https://www.not-real.com' className='v-item'>Item 1</li>
-    <li href='https://www.not-real.com' className='v-item'>Item 2</li>
-    <li href='https://www.not-real.com' className='v-item'>Item 3</li>
-    <li href='https://www.not-real.com' className='v-item'>Item 4</li>
+    <input type='checkbox' checked={false} />
+    <li boolean href='https://www.not-real.com' className='v-item'>Item 1</li>
+    <li boolean href='https://www.not-real.com' className='v-item'>Item 2</li>
+    <li boolean href='https://www.not-real.com' className='v-item'>Item 3</li>
+    <li boolean href='https://www.not-real.com' className='v-item'>Item 4</li>
   </ul>
 )
 
