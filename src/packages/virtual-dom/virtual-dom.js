@@ -28,8 +28,6 @@ function Vapor (component: Component, props: Props = {}, ...children: Children):
  */
 function changed (newNode: Node, oldNode: Node): boolean {
   return newNode.id !== oldNode.id
-  // TODO
-  // Use node.id to do simple diff
   // return typeof newNode !== typeof oldNode || // If node1 is in a different type to node2
   //   (typeof newNode === 'string' && newNode !== oldNode) || // If both nodes are strings but are different
   //   typeof newNode.component !== typeof oldNode.component // If both are Vapor components but are different
