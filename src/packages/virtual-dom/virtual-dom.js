@@ -83,7 +83,7 @@ function updateNode ($parent: Object, newNode: Node, oldNode: Node, index: numbe
  * @param node
  */
 function cacheNode (node: Node): void {
-  const $node: string = document.createElement(node.component)
+  const $node: string = document.createElement(node.component).outerHTML
 
   if (!store.get(node.id)) {
     store.set(node.id, $node)
@@ -105,7 +105,8 @@ function nodeCached (node: Node): boolean {
  * @returns {*}
  */
 function getCachedNode (node: Node): Object {
-  return store.get(node.id)
+  const nodeString = store.get(node.id)
+  return document.createRange().createContextualFragment(nodeString)
 }
 
 /**

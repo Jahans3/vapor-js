@@ -26,7 +26,7 @@ const Vtree = (
 
 const Vtree2 = (
   <ul className='v-list'>
-    <img src='https://www.watertechonline.com/wp-content/uploads/2015/11/iStock_000004135118_800x533.jpg' alt=""/>
+    <img src='https://www.watertechonline.com/wp-content/uploads/2015/11/iStock_000004135118_800x533.jpg' />
     <span>Welcome to Vapor!</span>
   </ul>
 )
