@@ -1,6 +1,6 @@
 {
   "name": "vapor-js",
-  "version": "0.0.2-alpha2",
+  "version": "0.0.2-alpha3",
   "main": "vapor.js",
   "author": "Joshua Jahans",
   "scripts": {
@@ -21,7 +21,7 @@
     "babel-cli": "6.26.0",
     "babel-eslint": "8.2.1",
     "babel-loader": "7.1.2",
-    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
     "babel-plugin-transform-es2015-parameters": "6.24.1",
@@ -42,8 +42,8 @@
     "eslint-plugin-standard": "3.0.1",
     "flow-bin": "0.59.0",
     "nodemon": "1.14.11",
-    "webpack": "4.0.1",
-    "webpack-cli": "^2.0.9",
+    "uglifyjs-webpack-plugin": "^1.2.2",
+    "webpack": "3.10.0",
     "webpack-merge": "4.1.1"
   },
   "dependencies": {
