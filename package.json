@@ -1,6 +1,6 @@
 {
   "name": "vapor-js",
-  "version": "0.0.2-alpha1",
+  "version": "0.0.2-alpha2",
   "main": "vapor.js",
   "author": "Joshua Jahans",
   "scripts": {
@@ -43,6 +43,7 @@
     "flow-bin": "0.59.0",
     "nodemon": "1.14.11",
     "webpack": "4.0.1",
+    "webpack-cli": "^2.0.9",
     "webpack-merge": "4.1.1"
   },
   "dependencies": {

@@ -5,14 +5,14 @@ export type Vapor = {
 }
 
 export type CreateVapor = {
+  templatePath: string,
   path: string,
   store?: Object,
   componentReducer: Function
 }
 
 export type GetHTML = {
-  path: string,
-  component: string,
+  templatePath: string,
   initialState?: Object,
   initialRender: string
 }
