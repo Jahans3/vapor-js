@@ -35,6 +35,7 @@ export function getInitialRender ({ path, component, store }: GetInitialRender):
  */
 export async function getHTML ({ templatePath, initialState = {}, initialRender }: GetHTML): Promise<string> {
   const html = await fs.readFile(templatePath)
+
   return html
     .replace('{{{app}}}', initialRender)
     .replace('{{{state}}}', JSON.stringify(initialState))
@@ -74,6 +75,7 @@ export default function createVapor ({ templatePath, path, store, componentReduc
   return function ({ component, props }: Vapor): Promise<string> {
     const initialState: Object = store ? componentReducer({ component, props }) : {}
     const initialRender: string = getInitialRender({ path, component, store })
+
     return getHTML({ templatePath, initialState, initialRender })
   }
 }
