@@ -1,6 +1,6 @@
 {
   "name": "vapor-js",
-  "version": "0.0.1-alpha5",
+  "version": "0.0.2-alpha1",
   "main": "vapor.js",
   "author": "Joshua Jahans",
   "scripts": {
@@ -8,6 +8,7 @@
     "dev": "nodemon ./src/index.js --exec babel-node",
     "build": "babel ./src/index.js --out-file vapor.js",
     "test": "node ./test",
+    "compile-vapor": "webpack --config webpack/vapor.config.js",
     "compile-virtual-dom": "webpack --config webpack/virtual-dom.js",
     "compile-babel-plugin": "",
     "compile-test-app": "webpack --config webpack/test-app.js"
@@ -21,14 +22,14 @@
     "babel-eslint": "8.2.1",
     "babel-loader": "7.1.2",
     "babel-plugin-transform-async-to-generator": "6.24.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
-    "babel-plugin-transform-es2015-parameters": "^6.24.1",
+    "babel-plugin-transform-es2015-parameters": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-env": "1.6.1",
     "babel-preset-flow": "6.23.0",
-    "babel-preset-react": "^6.24.1",
+    "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "eslint": "4.17.0",
     "eslint-config-standard": "11.0.0-beta.0",
@@ -41,14 +42,14 @@
     "eslint-plugin-standard": "3.0.1",
     "flow-bin": "0.59.0",
     "nodemon": "1.14.11",
-    "webpack": "3.10.0",
+    "webpack": "4.0.1",
     "webpack-merge": "4.1.1"
   },
   "dependencies": {
-    "base-64": "0.1.0",
+    "fs-extra": "5.0.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "react-html-parser": "^2.0.2",
-    "store": "2.0.12"
+    "react-redux": "5.0.7",
+    "redux": "3.7.2"
   }
 }

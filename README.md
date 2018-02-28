@@ -1,11 +1,20 @@
 # Vapor-js
-An atomic, lightweight client- and server-rendered web application framework that heavily leverages cached components and simple design to achieve blazing fast renders.
+A pre-built server-side renderer for React.
 
-### VaporReact
-Coming soon...
+Batteries included:
+* Provides simple HTML template, for more customisation you can provide your own
+* Creates an 
+
+Using Redux
+* If you use Redux, simply pass in your store
+    * TODO - handle multiple stores for each component
+* Pass in a function that will generate required initial state for your app
+    * This should just be a function that dispatches actions
+
+API docs - TODO
 
 ### Installation
-Install `vapor-js` with your favourite package manager:
+Install `vapor-js`:
 ```
 yarn add vapor-js
 ```
