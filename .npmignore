@@ -4,6 +4,7 @@ webpack/
 .babelrc
 .eslintrc
 .flowconfig
+.idea
 
 yarn.lock
 yarn-error.lock
