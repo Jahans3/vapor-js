@@ -1,3 +1,4 @@
 module.exports = require('./base.config')({
-  name: 'vapor'
+  name: 'vapor',
+  mode: 'production'
 })

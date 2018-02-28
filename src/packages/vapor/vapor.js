@@ -87,4 +87,6 @@ export default function createVapor ({ templatePath, path, store, componentReduc
  */
 function assert ({ expression, message }) {
   if (!expression) throw new Error(message)
+
+  return true
 }
