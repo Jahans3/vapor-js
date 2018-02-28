@@ -1,2 +1,9 @@
 src/
-webpack
+webpack/
+
+.babelrc
+.eslintrc
+.flowconfig
+
+yarn.lock
+yarn-error.lock
