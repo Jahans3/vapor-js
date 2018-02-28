@@ -24,11 +24,10 @@ The `componentReducer` should simply check for different components and build a 
 ```
 const componentReducer = ({ store, component, props = {} }) => {
   switch (component) {
-    case 'City':
-      const { annotation_uri: [ annotationUri ], cityName: city, feed } = props
+    case 'Onboarding':
+      const { user: { name }, city } = props
 
-      store.dispatch(fetchAnnotationUriSuccess({ annotationUri }))
-      store.dispatch(fetchFeedSuccess({ feed }))
+      store.dispatch(fetchUserNameSuccess({ name }))
       store.dispatch(fetchCitySuccess({ city }))
 
       return store.getState()
