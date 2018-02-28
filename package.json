@@ -1,6 +1,6 @@
 {
   "name": "vapor-js",
-  "version": "0.0.2-alpha3",
+  "version": "0.0.2-alpha4",
   "main": "vapor.js",
   "author": "Joshua Jahans",
   "scripts": {
@@ -27,6 +27,7 @@
     "babel-plugin-transform-es2015-parameters": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-transform-react-jsx": "6.24.1",
+    "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-flow": "6.23.0",
     "babel-preset-react": "6.24.1",

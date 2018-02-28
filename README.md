@@ -1,6 +1,8 @@
 # Vapor-js
 A pre-built server-side renderer for React.
 
+Work in progress!
+
 ### Using Vapor
 Vapor allows you to effortlessly break a monolithic React application into smaller, more manageable applications. This can have great effects on performance, as your application can be broken down into smaller sub-apps called 'Components'.
 
