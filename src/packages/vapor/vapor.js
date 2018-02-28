@@ -33,12 +33,11 @@ export function getInitialRender ({ path, component, store }: GetInitialRender):
  * @param initialRender
  * @returns {Promise.<XML|string>}
  */
-export async function getHTML ({ templatePath, initialState = {}, initialRender }: GetHTML): Promise<string> {
-  const html = await fs.readFile(templatePath)
-
-  return html
-    .replace('{{{app}}}', initialRender)
-    .replace('{{{state}}}', JSON.stringify(initialState))
+export function getHTML ({ templatePath, initialState = {}, initialRender }: GetHTML): Promise<string> {
+  return fs.readFile(templatePath)
+    .then(html => html
+      .replace('{{{app}}}', initialRender)
+      .replace('{{{state}}}', JSON.stringify(initialState)))
 }
 
 /**

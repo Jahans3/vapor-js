@@ -4,8 +4,6 @@
     "transform-es2015-parameters",
     "transform-object-rest-spread",
     "transform-es2015-modules-commonjs",
-    "transform-class-properties",
-    "transform-async-to-generator",
-    "transform-regenerator"
+    "transform-class-properties"
   ]
 }
