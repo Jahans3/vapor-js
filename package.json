@@ -1,7 +1,7 @@
 {
   "name": "vapor-js",
-  "version": "0.0.2-alpha5",
-  "main": "vapor.js",
+  "version": "0.0.2-alpha6",
+  "main": "index.js",
   "author": "Joshua Jahans",
   "scripts": {
     "start": "babel-node ./src/index.js --exec babel-node",
