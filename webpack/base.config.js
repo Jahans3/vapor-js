@@ -6,6 +6,7 @@ module.exports = ({
   name,
   path: filePath = 'src/packages/',
   out: outPath = 'lib/',
+  mode,
   ...options
 }) => ({
   entry: `./${filePath}${name}/index.js`,
@@ -22,10 +23,11 @@ module.exports = ({
     fs: 'empty'
   },
   plugins: [
-    new UglifyJsPlugin(),
+    // new UglifyJsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(true)
+      'process.env.NODE_ENV': JSON.stringify(mode === 'production')
     })
   ],
+  mode,
   ...options
 })
