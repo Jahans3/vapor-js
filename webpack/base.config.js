@@ -30,6 +30,7 @@ module.exports = ({
       window: {}
     })
   ],
+  target: 'node',
   mode,
   ...options
 })
