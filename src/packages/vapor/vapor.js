@@ -18,9 +18,7 @@ export function getInitialRender ({ components, component, store }: GetInitialRe
   const App: Function = components[component]
   const Root: Element<*> = createElement(App, {}, null)
 
-  console.log('Vape 2.5')
-
-  return 'your mum'
+  return '--- APP GOES HERE ---'
 
   if (store) {
     return renderToString(createElement(Provider, { store }, Root))
@@ -73,12 +71,9 @@ export default function createVapor ({ template, components, store, componentRed
     })
   }
 
-  return function ({ component, props }: Vapor): Promise<string> {
-    console.log('Vape 1')
+  return function ({ component, props }: Vapor): string {
     const initialState: Object = store ? componentReducer({ component, props, store }) : {}
-    console.log('Vape 2')
     const initialRender: string = getInitialRender({ components, component, store })
-    console.log('Vape 3')
 
     return buildHTML({ template, initialState, initialRender })
   }
