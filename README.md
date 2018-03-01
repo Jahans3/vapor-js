@@ -8,6 +8,11 @@ Vapor allows you to effortlessly break a monolithic React application into small
 
 Let's say your app has public-facing pages, where a user who is not registered can see a different, trimmed down version of your website. Not only does this part of the app not require the majority of your components, but it also does not require Redux. Using Vapor you can omit Redux from this portion of your app and serve a smaller bundle to the client.
 
+### Basic Setup
+```
+
+```
+
 ### With Redux
 * If you use Redux, simply pass in your store
     * TODO - handle multiple stores for each component

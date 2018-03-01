@@ -72,7 +72,9 @@ export default function createVapor ({ templatePath, path, store, componentReduc
   }
 
   return function ({ component, props }: Vapor): Promise<string> {
-    const initialState: Object = store ? componentReducer({ component, props }) : {}
+    console.log('Vapor!')
+    console.log({store})
+    const initialState: Object = store ? componentReducer({ component, props, store }) : {}
     const initialRender: string = getInitialRender({ path, component, store })
 
     return getHTML({ templatePath, initialState, initialRender })
