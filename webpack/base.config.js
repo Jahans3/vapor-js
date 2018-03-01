@@ -7,12 +7,13 @@ module.exports = ({
   path: filePath = 'src/packages/',
   out: outPath = 'lib/',
   mode = 'production',
+  target = 'node',
   ...options
 }) => ({
   entry: `./${filePath}${name}/index.js`,
   output: {
     path: path.join(__dirname, `../${outPath}`),
-    filename: `${name}.js`,
+    filename: `${name}.${target}.js`,
     libraryTarget: 'umd'
   },
   module: {
@@ -30,7 +31,7 @@ module.exports = ({
       window: {}
     })
   ],
-  target: 'node',
+  target,
   mode,
   ...options
 })
