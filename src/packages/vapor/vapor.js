@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 import type { Element } from 'react'
-import type { CreateVapor, Vapor, GetHTML, GetInitialRender } from './types'
+import type { CreateVapor, Vapor, BuildHTML, GetInitialRender } from './types'
 
 /**
  * Get the app's initial render
@@ -36,11 +36,10 @@ export function getInitialRender ({ components, component, store }: GetInitialRe
  * @param initialRender
  * @returns {Promise.<XML|string>}
  */
-export function getHTML ({ template, initialState = {}, initialRender }: GetHTML): Promise<string> {
-  return fs.readFile(template)
-    .then(html => html
-      .replace('{{{app}}}', initialRender)
-      .replace('{{{state}}}', JSON.stringify(initialState)))
+export function buildHTML ({ template, initialState = {}, initialRender }: BuildHTML): string {
+  return template
+    .replace('{{{app}}}', initialRender)
+    .replace('{{{state}}}', JSON.stringify(initialState))
 }
 
 /**
@@ -81,7 +80,7 @@ export default function createVapor ({ template, components, store, componentRed
     const initialRender: string = getInitialRender({ components, component, store })
     console.log('Vape 3')
 
-    return getHTML({ template, initialState, initialRender })
+    return buildHTML({ template, initialState, initialRender })
   }
 }
 

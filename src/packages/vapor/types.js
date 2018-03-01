@@ -11,7 +11,7 @@ export type CreateVapor = {
   componentReducer: Function
 }
 
-export type GetHTML = {
+export type BuildHTML = {
   template: string,
   initialState?: Object,
   initialRender: string
