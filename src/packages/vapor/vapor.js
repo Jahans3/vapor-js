@@ -1,5 +1,4 @@
 // @flow
-import fs from 'fs-extra'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
@@ -9,32 +8,36 @@ import type { CreateVapor, Vapor, GetHTML, GetInitialRender } from './types'
 
 /**
  * Get the app's initial render
- * @param path
+ * @param components
  * @param component
  * @param store
  * @returns {*}
  */
-export function getInitialRender ({ path, component, store }: GetInitialRender): string {
+export function getInitialRender ({ components, component, store }: GetInitialRender): string {
   // $FlowFixMe
-  const App: Function = require(path + component)
+  const App: Function = components[component]
   const Root: Element<*> = createElement(App, {}, null)
 
+  console.log('Vape 2.5')
+
+  return 'your mum'
+
   if (store) {
-    return renderToString(Root)
-  } else {
     return renderToString(createElement(Provider, { store }, Root))
+  } else {
+    return renderToString(Root)
   }
 }
 
 /**
  * Fetch initial HTML and append state and initial render
- * @param templatePath
+ * @param template
  * @param initialState
  * @param initialRender
  * @returns {Promise.<XML|string>}
  */
-export function getHTML ({ templatePath, initialState = {}, initialRender }: GetHTML): Promise<string> {
-  return fs.readFile(templatePath)
+export function getHTML ({ template, initialState = {}, initialRender }: GetHTML): Promise<string> {
+  return fs.readFile(template)
     .then(html => html
       .replace('{{{app}}}', initialRender)
       .replace('{{{state}}}', JSON.stringify(initialState)))
@@ -42,21 +45,21 @@ export function getHTML ({ templatePath, initialState = {}, initialRender }: Get
 
 /**
  * Initialise Vapor
- * @param templatePath
- * @param path
+ * @param template
+ * @param components
  * @param store
  * @param componentReducer
  * @returns {Function}
  */
-export default function createVapor ({ templatePath, path, store, componentReducer }: CreateVapor): Function {
+export default function createVapor ({ template, components, store, componentReducer }: CreateVapor): Function {
   assert({
-    expression: typeof templatePath === 'string',
-    message: 'Vapor expects param \'templatePath\' to be a string'
+    expression: typeof template === 'string',
+    message: 'Vapor expects param \'template\' to be a string'
   })
 
   assert({
-    expression: typeof path === 'string',
-    message: 'Vapor expects param \'path\' to be a string'
+    expression: typeof components === 'object',
+    message: 'Vapor expects param \'components\' to be an object'
   })
 
   assert({
@@ -72,12 +75,13 @@ export default function createVapor ({ templatePath, path, store, componentReduc
   }
 
   return function ({ component, props }: Vapor): Promise<string> {
-    console.log('Vapor!')
-    console.log({store})
+    console.log('Vape 1')
     const initialState: Object = store ? componentReducer({ component, props, store }) : {}
-    const initialRender: string = getInitialRender({ path, component, store })
+    console.log('Vape 2')
+    const initialRender: string = getInitialRender({ components, component, store })
+    console.log('Vape 3')
 
-    return getHTML({ templatePath, initialState, initialRender })
+    return getHTML({ template, initialState, initialRender })
   }
 }
 

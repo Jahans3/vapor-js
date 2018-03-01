@@ -51,7 +51,6 @@
     "webpack-merge": "4.1.1"
   },
   "dependencies": {
-    "fs-extra": "5.0.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.7",
