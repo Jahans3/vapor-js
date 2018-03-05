@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 import type { Element } from 'react'
-import type { GetComponent, CreateVapor, Vapor, BuildHTML, GetInitialRender } from './types'
+import type { ComponentMap, CreateVapor, Vapor, Build, Exists, BuildHTML, GetInitialRender } from './types'
 
 /**
  * Get a component from the set of given components
@@ -12,7 +12,7 @@ import type { GetComponent, CreateVapor, Vapor, BuildHTML, GetInitialRender } fr
  * @param components
  * @returns {*}
  */
-function getComponent ({ component, components }: GetComponent): Function {
+function getComponent ({ component, components }: ComponentMap): Function {
   const App = components[component]
 
   assert({
@@ -23,7 +23,11 @@ function getComponent ({ component, components }: GetComponent): Function {
     `)
   })
 
-  return App
+  if (App.style) {
+    return App.component
+  } else {
+    return App
+  }
 }
 
 /**
@@ -45,15 +49,33 @@ export function getInitialRender ({ components, component, store }: GetInitialRe
 }
 
 /**
+ * Get the app's initial styles
+ * @param components
+ * @param component
+ * @returns {string}
+ */
+export function getInitialStyles ({ components, component }: ComponentMap): string {
+  const thisComponent = components[component]
+
+  if (thisComponent && thisComponent.style) {
+    return thisComponent.style
+  }
+
+  return ''
+}
+
+/**
  * Fetch initial HTML and append state and initial render
  * @param template
+ * @param component
  * @param initialState
  * @param initialRender
  * @param initialStyles
  * @returns {Promise.<XML|string>}
  */
-export function buildHTML ({ template, initialState = {}, initialRender, initialStyles }: BuildHTML): string {
+export function buildHTML ({ template, component, initialState = {}, initialRender, initialStyles }: BuildHTML): string {
   return template
+    .replace('{{{component}}}', component)
     .replace('{{{style}}}', initialStyles)
     .replace('{{{app}}}', initialRender)
     .replace('{{{state}}}', JSON.stringify(initialState))
@@ -68,7 +90,7 @@ export function buildHTML ({ template, initialState = {}, initialRender, initial
  * @param styles
  * @returns {Function}
  */
-export default function createVapor ({ template, components, store, componentReducer, styles }: CreateVapor): Function {
+export default function createVapor ({ template, components, store, componentReducer }: CreateVapor): Vapor {
   assert({
     expression: typeof template === 'string',
     message: 'Vapor expects param \'template\' to be a string'
@@ -91,11 +113,18 @@ export default function createVapor ({ template, components, store, componentRed
     })
   }
 
-  return function vapor ({ component, props }: Vapor): string {
-    const initialState: Object = store ? componentReducer({ component, props, store }) : {}
-    const initialRender: string = getInitialRender({ components, component, store })
+  return {
+    build ({ component, props }: Build): string {
+      const initialState: Object = store ? componentReducer({ component, props, store }) : {}
+      const initialRender: string = getInitialRender({ components, component, store })
+      const initialStyles: string = getInitialStyles({ components, component })
 
-    return buildHTML({ template, initialState, initialRender, initialStyles: styles })
+      return buildHTML({ template, component, initialState, initialRender, initialStyles })
+    },
+
+    exists ({ component }: Exists): boolean {
+      return !!components[component]
+    }
   }
 }
 
