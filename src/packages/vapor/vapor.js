@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 import type { Element } from 'react'
-import type { ComponentMap, CreateVapor, Vapor, Build, Exists, BuildHTML, GetInitialRender } from './types'
+import type { ComponentMap, CreateVapor, Vapor, Build, Exists, BuildHTML, GetInitialRender, Assertion } from './types'
 
 /**
  * Get a component from the set of given components
@@ -13,7 +13,7 @@ import type { ComponentMap, CreateVapor, Vapor, Build, Exists, BuildHTML, GetIni
  * @returns {*}
  */
 function getComponent ({ component, components }: ComponentMap): Function {
-  const App = components[component]
+  const App: { component: Function } | Function = components[component]
 
   assert({
     expression: !!App,
@@ -23,7 +23,7 @@ function getComponent ({ component, components }: ComponentMap): Function {
     `)
   })
 
-  if (App.style) {
+  if (App.component) {
     return App.component
   } else {
     return App
@@ -133,7 +133,7 @@ export default function createVapor ({ template, components, store, componentRed
  * @param expression
  * @param message
  */
-function assert ({ expression, message }) {
+function assert ({ expression, message }: Assertion): boolean | Error {
   if (!expression) throw new Error(message)
 
   return true

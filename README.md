@@ -1,14 +1,119 @@
 # Vapor-js
-A server-side renderer for segmented React applications with built-in support for serialisable state management.
+A server-side renderer for segmented React applications with built-in Redux support.
+
+This project is a work in progress!
 
 ### Using Vapor
-Vapor allows you to easily break a monolithic React application into smaller, more manageable applications. This can have great effects on performance, as your application can be broken down into smaller sub-apps called `Components`.
-
-Let's say your app has public-facing pages, where a user who is not registered can see a different, trimmed down version of your website. Not only does this part of the app not require the majority of your components, but it also does not require Redux. Using Vapor you can omit Redux from this portion of your app and serve a smaller bundle to the client.
+Vapor allows you to easily break a monolithic React application into smaller, more manageable chunks. This can have great effects on performance, as your application can be broken down into smaller sub-apps called `Components`.
 
 ### Basic Setup
+###### 1. Break application into smaller chunks
+First, create separate bundles for each of the sub-apps you wish to pre-render.
+
+Export the applications as components, in the same way you would with the traditional approach to server-side rendering.
+
+###### 2. Create a `componentReducer`
+Your component reducer should just be a function that accepts `store`, `component`, and `props` parameters and uses them to prepare your store for each of your Vapor components. To prepare the store, simply dispatch actions until your store is in the desired state, then return the store.
+
+The simplest way to do this, as with Redux, is with a `switch/case` statement. In the below example each reducer has been exported into their own function, however this is not necessary.
+
+`componentReducer/index.js`:
+```
+import { City, Onboarding, Feed } from './reducers'
+
+export default function componentReducer ({ store, component, props }) {
+  switch (component) {
+    case 'City':
+      return City({ store, props })
+    case 'Onboarding':
+      return Onboarding({ store, props })
+    case 'Feed':
+      return Feed({ store, props })
+  }
+}
 ```
 
+`componentReducer/reducers.js`:
+```
+export function City ({ store, props }) {
+  const { annotation_uri: [ annotationUri ], city, feed } = props
+
+  store.dispatch(fetchAnnotationUriSuccess({ annotationUri }))
+  store.dispatch(fetchFeedSuccess({ feed }))
+  store.dispatch(fetchCitySuccess({ city }))
+
+  return store.getState()
+}
+
+export function Onboarding ({ store, props }) {
+  // ...
+}
+
+export function Feed ({ store, props }) {
+  // ...
+}
+```
+
+###### 3. Initialise Vapor
+Import your apps (`Components`) and pass them into `createVapor`. If you are using Redux, pass in your store too.
+
+Import your HTML template, this is what your React applications and Redux store will be injected into. Here we are `require`ing an HTML string from a `.js` file, but this can be done any way you like (e.g. `fs.readFile`).
+
+Import your `componentReducer`, as defined in step 2.
+
+Create a `components` object, each property of which should be one of your Vapor components (a self-contained React tree).
+
+`vaporSetup.js`:
+```
+import createVapor from 'vapor-js'
+import store from '../store'
+import template from '../template'
+import componentReducer from '../componentReducer'
+
+const components = {
+  City: require('../Components/City'),
+  Onboarding: require('../Components/Onboarding'),
+  Feed: require('../Components/Feed)
+}
+
+export default createVapor({ template, store, components, componentReducer })
+```
+
+###### 4. Render your app
+When you call `createVapor` an object with two methods is returned, `exists` and `build`.
+
+`exists` accepts a component name and checks to see if it exists, you can use this to determine when to `404`, amongst other things. Returns `true` if the component exists, `false` otherwise.
+
+`build` accepts a component name and props, the props will be passed to your component reducer to prepare your stores.
+
+When you call `build` the return value will be a fully server-rendered React application, which you can send directly to your client (don't forget to also serve your client-side bundle, which should call `react-dom/server`'s `hydrate` method).
+
+`server.js`:
+```
+import express from 'express'
+import vapor from './vaporSetup'
+
+const app = express()
+const port = 8080
+
+app.use(express.static('path/to/assets'))
+
+app.get('/', async (req, res) => {
+  const component = 'Landing'
+  
+  if (!vapor.exists({ component })) {
+    res.status(404)
+    res.send('Oopsie...')
+    return
+  }
+  
+  const props = await request(options)
+  const initialRender = vapor.build({ component, props })
+  
+  res.send(initialRender)
+})
+
+app.listen(port, () => { console.log(`Server listening on ${port}`) })
 ```
 
 ### With Redux

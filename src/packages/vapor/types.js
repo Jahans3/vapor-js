@@ -46,3 +46,8 @@ export type GetInitialRender = {
   component: string,
   store?: Object
 }
+
+export type Assertion = {
+  expression: boolean,
+  message: string
+}
