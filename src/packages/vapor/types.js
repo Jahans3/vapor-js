@@ -1,17 +1,36 @@
 // @flow
-import type { Element } from 'react'
-
 export type Vapor = {
   build: Function,
   exists: Function
 }
 
-export type ComponentWithStyle = {
-  component: Element<*>,
+export type ComponentConfig = Function | {
+  component: Function,
+  template?: string,
+  store?: Object,
   style?: string
 }
 
-export type ComponentMap = {
+export type GetInitialState = {
+  components: Object,
+  component: string,
+  componentReducer: Function,
+  props?: Object,
+  globalStore?: Object
+}
+
+export type InitialState = {
+  initialState?: Object,
+  store?: Object
+}
+
+export type GetTemplate = {
+  components: Object,
+  component: string,
+  template: string
+}
+
+export type GetComponent = {
   component: string,
   components: Object
 }
@@ -35,6 +54,7 @@ export type CreateVapor = {
 
 export type BuildHTML = {
   template: string,
+  components: Object,
   component: string,
   initialState?: Object,
   initialRender: string,

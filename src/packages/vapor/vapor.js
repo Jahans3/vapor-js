@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 import type { Element } from 'react'
-import type { ComponentMap, CreateVapor, Vapor, Build, Exists, BuildHTML, GetInitialRender, Assertion } from './types'
+import type { InitialState, GetTemplate, GetInitialState, GetComponent, CreateVapor, Vapor, Build, Exists, BuildHTML, GetInitialRender, Assertion, ComponentConfig } from './types'
 
 /**
  * Get a component from the set of given components
@@ -12,8 +12,8 @@ import type { ComponentMap, CreateVapor, Vapor, Build, Exists, BuildHTML, GetIni
  * @param components
  * @returns {*}
  */
-function getComponent ({ component, components }: ComponentMap): Function {
-  const App: { component: Function } | Function = components[component]
+function getComponent ({ component, components }: GetComponent): Function {
+  const App: ComponentConfig = components[component]
 
   assert({
     expression: !!App,
@@ -28,6 +28,29 @@ function getComponent ({ component, components }: ComponentMap): Function {
   } else {
     return App
   }
+}
+
+/**
+ * Get the initial state for a component, fall back to global store if none found in config
+ * @param componentReducer
+ * @param components
+ * @param component
+ * @param props
+ * @param store
+ * @returns {*}
+ */
+export function getInitialState ({ componentReducer, components, component, props, globalStore }: GetInitialState): InitialState {
+  const thisComponent: ComponentConfig = components[component]
+
+  if (thisComponent && thisComponent.store) {
+    return componentReducer({ component, store: thisComponent.store, props })
+  }
+
+  if (globalStore) {
+    return componentReducer({ component, store: globalStore, props })
+  }
+
+  return {}
 }
 
 /**
@@ -54,8 +77,8 @@ export function getInitialRender ({ components, component, store }: GetInitialRe
  * @param component
  * @returns {string}
  */
-export function getInitialStyles ({ components, component }: ComponentMap): string {
-  const thisComponent = components[component]
+export function getInitialStyles ({ components, component }: GetComponent): string {
+  const thisComponent: ComponentConfig = components[component]
 
   if (thisComponent && thisComponent.style) {
     return thisComponent.style
@@ -64,17 +87,30 @@ export function getInitialStyles ({ components, component }: ComponentMap): stri
   return ''
 }
 
+export function getTemplate ({ components, component, template }: GetTemplate): string {
+  const thisComponent: ComponentConfig = components[component]
+
+  if (thisComponent && thisComponent.template) {
+    return thisComponent.template
+  }
+
+  return template
+}
+
 /**
  * Fetch initial HTML and append state and initial render
  * @param template
+ * @param components
  * @param component
  * @param initialState
  * @param initialRender
  * @param initialStyles
  * @returns {Promise.<XML|string>}
  */
-export function buildHTML ({ template, component, initialState = {}, initialRender, initialStyles }: BuildHTML): string {
-  return template
+export function buildHTML ({ template, components, component, initialState = {}, initialRender, initialStyles }: BuildHTML): string {
+  const componentTemplate: string = getTemplate({ components, component, template })
+
+  return componentTemplate
     .replace('{{{component}}}', component)
     .replace('{{{style}}}', initialStyles)
     .replace('{{{app}}}', initialRender)
@@ -87,39 +123,42 @@ export function buildHTML ({ template, component, initialState = {}, initialRend
  * @param components
  * @param store
  * @param componentReducer
- * @param styles
  * @returns {Function}
  */
-export default function createVapor ({ template, components, store, componentReducer }: CreateVapor): Vapor {
-  assert({
-    expression: typeof template === 'string',
-    message: 'Vapor expects param \'template\' to be a string'
-  })
-
+export default function createVapor ({ template, components, store: globalStore, componentReducer }: CreateVapor): Vapor {
   assert({
     expression: typeof components === 'object',
-    message: 'Vapor expects param \'components\' to be an object'
+    message: 'createVapor expects param \'components\' to be an object'
   })
 
-  assert({
-    expression: typeof componentReducer === 'function',
-    message: 'Vapor expects param \'componentReducer\' to be a function'
-  })
-
-  if (store) {
+  if (template) {
     assert({
-      expression: typeof store === 'object',
-      message: 'Vapor expects param \'store\' to be an Object'
+      expression: typeof template === 'string',
+      message: 'createVapor expects param \'template\' to be a string'
+    })
+  }
+
+  if (componentReducer) {
+    assert({
+      expression: typeof componentReducer === 'function',
+      message: 'createVapor expects param \'componentReducer\' to be a function'
+    })
+  }
+
+  if (globalStore) {
+    assert({
+      expression: typeof globalStore === 'object',
+      message: 'createVapor expects param \'store\' to be an object'
     })
   }
 
   return {
     build ({ component, props }: Build): string {
-      const initialState: Object = store ? componentReducer({ component, props, store }) : {}
+      const { initialState, store }: InitialState = getInitialState({ componentReducer, components, component, globalStore, props })
       const initialRender: string = getInitialRender({ components, component, store })
       const initialStyles: string = getInitialStyles({ components, component })
 
-      return buildHTML({ template, component, initialState, initialRender, initialStyles })
+      return buildHTML({ template, components, component, initialState, initialRender, initialStyles })
     },
 
     exists ({ component }: Exists): boolean {
@@ -133,8 +172,10 @@ export default function createVapor ({ template, components, store, componentRed
  * @param expression
  * @param message
  */
-function assert ({ expression, message }: Assertion): boolean | Error {
-  if (!expression) throw new Error(message)
+function assert ({ expression, message }: Assertion): boolean {
+  if (!expression && process.env.NODE_ENV === 'development') {
+    throw new Error(message)
+  }
 
   return true
 }

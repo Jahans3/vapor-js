@@ -27,7 +27,6 @@ module.exports = ({
   plugins: [
     new UglifyJsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(mode),
       window: {}
     })
   ],
