@@ -1,6 +1,6 @@
 {
   "name": "vapor-js",
-  "version": "0.0.2-alpha13",
+  "version": "0.0.2-alpha135",
   "main": "index.js",
   "author": "Joshua Jahans",
   "scripts": {
@@ -13,6 +13,7 @@
     "compile-babel-plugin": "",
     "compile-test-app": "webpack --config webpack/test-app.js"
   },
+  "repository": "git+https://github.com/Jahans3/vapor-js.js.git",
   "license": "MIT",
   "standard": {
     "parser": "babel-eslint"

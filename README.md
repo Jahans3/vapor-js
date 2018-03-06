@@ -1,16 +1,14 @@
+####`Work in progress! `
+
 # Vapor-js
 A server-side renderer for segmented React applications with built-in Redux support.
 
-This project is a work in progress!
-
 ### Using Vapor
-Vapor allows you to easily break a monolithic React application into smaller, more manageable chunks. This can have great effects on performance, as your application can be broken down into smaller sub-apps called `Components`.
+Vapor allows you to easily break a large React application into smaller, more manageable apps, which can have a big effect on performance.
 
 ### Basic Setup
 ###### 1. Break application into smaller chunks
-First, create separate bundles for each of the sub-apps you wish to pre-render.
-
-Export the applications as components, in the same way you would with the traditional approach to server-side rendering.
+First, create separate bundles for each of the sub-apps you wish to pre-render and export each root component.
 
 ###### 2. Create a `componentReducer`
 Your component reducer should just be a function that accepts `store`, `component`, and `props` parameters and uses them to prepare your store for each of your Vapor components. To prepare the store, simply dispatch actions until your store is in the desired state, then return the store.
@@ -32,7 +30,12 @@ export default function componentReducer ({ store, component, props }) {
   }
 }
 ```
+Or you could use an object map to reduce boilerplate:
+```
+import { City, Onboarding, Feed } from './reducers'
 
+export default ({ store, component, props }) => ({ City, Onboarding, Feed })[component]({ store, props })
+```
 `componentReducer/reducers.js`:
 ```
 export function City ({ store, props }) {
