@@ -43,11 +43,11 @@ export function getInitialState ({ componentReducer, components, component, prop
   const thisComponent: ComponentConfig = components[component]
 
   if (thisComponent && thisComponent.store) {
-    return componentReducer({ component, store: thisComponent.store, props })
+    return { store: thisComponent.store, initialState: componentReducer({ component, store: thisComponent.store, props }) }
   }
 
   if (globalStore) {
-    return componentReducer({ component, store: globalStore, props })
+    return { store: globalStore, initialState: componentReducer({ component, store: globalStore, props }) }
   }
 
   return {}
