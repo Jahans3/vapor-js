@@ -12,7 +12,7 @@ import type { InitialState, GetTemplate, GetInitialState, GetComponent, CreateVa
  * @param components
  * @returns {*}
  */
-function getComponent ({ component, components }: GetComponent): Function {
+export function getComponent ({ component, components }: GetComponent): Function {
   const App: ComponentConfig = components[component]
 
   assert({
@@ -87,6 +87,13 @@ export function getInitialStyles ({ components, component }: GetComponent): stri
   return ''
 }
 
+/**
+ * Get a component's template
+ * @param components
+ * @param component
+ * @param template
+ * @returns {*}
+ */
 export function getTemplate ({ components, component, template }: GetTemplate): string {
   const thisComponent: ComponentConfig = components[component]
 
