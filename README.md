@@ -90,6 +90,7 @@ Using a lookup table can reduce boilerplate:
 const Feed = ({ store: { dispatch, getState }, props }) => {
     dispatch(fetchFeedSuccess({ feed: props.feed }))
     return getState()
+}
 const componentReducer = ({ component, store, props }) => ({ Feed })[component]({ store, props })
 ```
 
