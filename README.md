@@ -84,15 +84,13 @@ function componentReducer ({ component, store, props }) {
 }
 ```
 
-Using a lookup table cuts down on boilerplate:
+Using a lookup table can reduce boilerplate:
 
 ```
-const componentReducer = ({ component, store, props }) => ({
-    Feed ({ store, props }) {
-        store.dispatch(fetchFeedSuccess({ feed: props.feed }))
-        return store.getState()
-    }
-})[component]({ store, props })
+const Feed = ({ store: { dispatch, getState }, props }) => {
+    dispatch(fetchFeedSuccess({ feed: props.feed }))
+    return getState()
+const componentReducer = ({ component, store, props }) => ({ Feed })[component]({ store, props })
 ```
 
 ###### `store`
