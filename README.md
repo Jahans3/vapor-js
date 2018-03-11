@@ -166,12 +166,11 @@ import createVapor from 'vapor-js'
 import store from '../store'
 import template from '../template'
 import componentReducer from '../componentReducer'
+import City from '../Components/City'
+import Onboarding from '../Components/Onboarding'
+import Feed from '../Components/Feed'
 
-const components = {
-  City: require('../Components/City'),
-  Onboarding: require('../Components/Onboarding'),
-  Feed: require('../Components/Feed)
-}
+const components = { City, Onboarding, Feed }
 
 export default createVapor({ template, store, components, componentReducer })
 ```
