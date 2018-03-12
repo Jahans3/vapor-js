@@ -1,23 +1,21 @@
 // @flow
-import { Children, Component } from 'react'
+import { Children, Component, type Element } from 'react'
 import PropTypes from 'prop-types'
-import type { Props } from './types'
 
-const key = '__IYA_VERSION__'
+type Props = {
+  version: string,
+  children: Component<*> | Element<*> | string
+}
 
-/*
-  TODO
-  Convert this into a general purpose context provider - version is too iya-specific
- */
-export function createVersionProvider (contextKey: string = key) {
+export function createVersionProvider (contextKey: string = '__IYA_VERSION__') {
   return class VersionProvider extends Component<Props> {
     static childContextTypes = {
       [contextKey]: PropTypes.string.isRequired
     }
 
-    getChildContext = () => ({
-      __IYA_VERSION__: this.props.version
-    })
+    getChildContext () {
+      return { [contextKey]: this.props.version }
+    }
 
     render () {
       return Children.only(this.props.children)
