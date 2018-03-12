@@ -1,6 +1,6 @@
 {
   "name": "vapor-js",
-  "version": "0.0.2-alpha176",
+  "version": "0.0.2-alpha18",
   "main": "index.js",
   "author": "Joshua Jahans",
   "scripts": {
@@ -52,6 +52,7 @@
     "webpack-merge": "4.1.1"
   },
   "dependencies": {
+    "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.7",
