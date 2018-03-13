@@ -5,14 +5,14 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = ({
   name,
   path: filePath = 'src/packages/',
-  out: outPath = 'lib/',
+  out = 'lib/',
   mode = 'production',
   target = 'node',
   ...options
 }) => ({
   entry: `./${filePath}${name}/index.js`,
   output: {
-    path: path.join(__dirname, `../${outPath}`),
+    path: path.join(__dirname, `../${out}`),
     filename: `${name}.${target}.js`,
     libraryTarget: 'umd'
   },

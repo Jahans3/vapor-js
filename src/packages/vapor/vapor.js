@@ -179,7 +179,7 @@ export default function createVapor ({ template, components, store: globalStore,
  * @param expression
  * @param message
  */
-function assert ({ expression, message }: Assertion): boolean {
+export function assert ({ expression, message }: Assertion): boolean {
   if (!expression && process.env.NODE_ENV === 'development') {
     throw new Error(message)
   }
