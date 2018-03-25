@@ -4,7 +4,33 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 import type { Element } from 'react'
-import type { InitialState, GetTemplate, GetInitialState, GetComponent, CreateVapor, Vapor, Build, Exists, BuildHTML, GetInitialRender, Assertion, ComponentConfig } from './types'
+import type {
+  InitialState,
+  GetTemplate,
+  GetInitialState,
+  GetComponent,
+  CreateVapor,
+  Vapor,
+  Build,
+  Exists,
+  BuildHTML,
+  GetInitialRender,
+  Assertion,
+  ComponentConfig
+} from './types'
+
+/**
+ * Assert expression is true
+ * @param expression
+ * @param message
+ */
+export function assert ({ expression, message }: Assertion): boolean {
+  if (!expression && process.env.NODE_ENV === 'development') {
+    throw new Error(message)
+  }
+
+  return true
+}
 
 /**
  * Get a component from the set of given components
@@ -58,11 +84,12 @@ export function getInitialState ({ componentReducer, components, component, prop
  * @param components
  * @param component
  * @param store
+ * @param rootProps
  * @returns {*}
  */
-export function getInitialRender ({ components, component, store }: GetInitialRender): string {
+export function getInitialRender ({ components, component, store, rootProps = {} }: GetInitialRender): string {
   const App: Function = getComponent({ components, component })
-  const Root: Element<*> = createElement(App, {}, null)
+  const Root: Element<*> = createElement(App, rootProps, null)
 
   if (store) {
     return renderToString(createElement(Provider, { store }, Root))
@@ -160,9 +187,9 @@ export default function createVapor ({ template, components, store: globalStore,
   }
 
   return {
-    build ({ component, props }: Build): string {
+    build ({ component, props, rootProps }: Build): string {
       const { initialState, store }: InitialState = getInitialState({ componentReducer, components, component, globalStore, props })
-      const initialRender: string = getInitialRender({ components, component, store })
+      const initialRender: string = getInitialRender({ components, component, store, props, rootProps })
       const initialStyles: string = getInitialStyles({ components, component })
 
       return buildHTML({ template, components, component, initialState, initialRender, initialStyles })
@@ -172,17 +199,4 @@ export default function createVapor ({ template, components, store: globalStore,
       return !!components[component]
     }
   }
-}
-
-/**
- * Assert expression is true
- * @param expression
- * @param message
- */
-export function assert ({ expression, message }: Assertion): boolean {
-  if (!expression && process.env.NODE_ENV === 'development') {
-    throw new Error(message)
-  }
-
-  return true
 }

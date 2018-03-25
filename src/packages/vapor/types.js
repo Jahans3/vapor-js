@@ -37,7 +37,8 @@ export type GetComponent = {
 
 export type Build = {
   component: string,
-  props?: Object
+  props?: Object,
+  rootProps?: Object
 }
 
 export type Exists = {
@@ -64,7 +65,8 @@ export type BuildHTML = {
 export type GetInitialRender = {
   components: Object,
   component: string,
-  store?: Object
+  store?: Object,
+  rootProps?: Object
 }
 
 export type Assertion = {
