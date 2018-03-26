@@ -187,6 +187,12 @@ export default function createVapor ({ template, components, store: globalStore,
   }
 
   return {
+    /*
+      TODO
+      - Rename props and rootProps, too confusing
+        - props and storeProps? rootProps and storeProps?
+        - props, split by a 'pick' option?
+     */
     build ({ component, props, rootProps }: Build): string {
       const { initialState, store }: InitialState = getInitialState({ componentReducer, components, component, globalStore, props })
       const initialRender: string = getInitialRender({ components, component, store, props, rootProps })
