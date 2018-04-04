@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /Users/joshua/.yarn/bin/yarn.js build
+  /usr/local/bin/node /Users/joshua/.yarn/bin/yarn.js publish
 
 PATH: 
   /Users/joshua/.yarn/bin:/Users/joshua/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/joshua/Library/Android/sdk/tools:/Users/joshua/Library/Android/sdk/platform-tools
@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
     "name": "vapor-js",
-    "version": "0.0.3",
+    "version": "0.0.32",
     "main": "index.js",
     "author": "Joshua Jahans",
     "scripts": {
@@ -29,7 +29,7 @@ npm manifest:
       "compile-babel-plugin": "",
       "compile-test-app": "webpack --config webpack/test-app.js"
     },
-    "repository": "git+https://github.com/Jahans3/vapor-js.js.git",
+    "repository": "git+https://github.com/Jahans3/vapor-js",
     "license": "MIT",
     "standard": {
       "parser": "babel-eslint"
@@ -62,15 +62,15 @@ npm manifest:
       "flow-bin": "0.59.0",
       "mocha": "5.0.1",
       "nodemon": "1.14.11",
+      "react": "16.3.1",
+      "react-dom": "16.3.1",
       "uglifyjs-webpack-plugin": "1.2.2",
       "webpack": "4.0.1",
       "webpack-cli": "2.0.9",
       "webpack-merge": "4.1.1"
     },
     "dependencies": {
-      "prop-types": "^15.6.1",
-      "react": "^16.3.0-alpha.3",
-      "react-dom": "^16.3.0-alpha.3",
+      "prop-types": "15.6.1",
       "react-redux": "5.0.7",
       "redux": "3.7.2"
     }
@@ -3561,9 +3561,13 @@ Lockfile:
       p-locate "^2.0.0"
       path-exists "^3.0.0"
   
-  lodash-es@^4.17.5, lodash-es@^4.2.1:
+  lodash-es@^4.17.5:
     version "4.17.5"
     resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.5.tgz#9fc6e737b1c4d151d8f9cae2247305d552ce748f"
+  
+  lodash-es@^4.2.1:
+    version "4.17.8"
+    resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.8.tgz#6fa8c8c5d337481df0bdf1c0d899d42473121e45"
   
   lodash.cond@^4.3.0:
     version "4.5.2"
@@ -4408,17 +4412,17 @@ Lockfile:
     dependencies:
       asap "~2.0.3"
   
-  prop-types@^15.6.0:
-    version "15.6.0"
-    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
+  prop-types@15.6.1:
+    version "15.6.1"
+    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
     dependencies:
       fbjs "^0.8.16"
       loose-envify "^1.3.1"
       object-assign "^4.1.1"
   
-  prop-types@^15.6.1:
-    version "15.6.1"
-    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
+  prop-types@^15.6.0:
+    version "15.6.0"
+    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
     dependencies:
       fbjs "^0.8.16"
       loose-envify "^1.3.1"
@@ -4518,9 +4522,9 @@ Lockfile:
       minimist "^1.2.0"
       strip-json-comments "~2.0.1"
   
-  react-dom@^16.3.0-alpha.3:
-    version "16.3.0-alpha.3"
-    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.0-alpha.3.tgz#edfc7a78263c54bcd7cc396b68163b0aed46be58"
+  react-dom@16.3.1:
+    version "16.3.1"
+    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.1.tgz#6a3c90a4fb62f915bdbcf6204422d93a7d4ca573"
     dependencies:
       fbjs "^0.8.16"
       loose-envify "^1.1.0"
@@ -4538,9 +4542,9 @@ Lockfile:
       loose-envify "^1.1.0"
       prop-types "^15.6.0"
   
-  react@^16.3.0-alpha.3:
-    version "16.3.0-alpha.3"
-    resolved "https://registry.yarnpkg.com/react/-/react-16.3.0-alpha.3.tgz#b925cbb4a971db2b0ab87cb9da449227d1ccafb4"
+  react@16.3.1:
+    version "16.3.1"
+    resolved "https://registry.yarnpkg.com/react/-/react-16.3.1.tgz#4a2da433d471251c69b6033ada30e2ed1202cfd8"
     dependencies:
       fbjs "^0.8.16"
       loose-envify "^1.1.0"
@@ -4627,7 +4631,7 @@ Lockfile:
     dependencies:
       resolve "^1.1.6"
   
-  redux@3.7.2:
+  redux@^3.7.2:
     version "3.7.2"
     resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
     dependencies:
@@ -5888,17 +5892,14 @@ Lockfile:
       untildify "^3.0.2"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 2
-  Command: sh
-  Arguments: -c babel ./src/index.js --out-file vapor.js
-  Directory: /Users/joshua/Documents/projects/vapor
-  Output:
-  
-      at ProcessTermError.MessageError (/Users/joshua/.yarn/lib/cli.js:186:110)
-      at new ProcessTermError (/Users/joshua/.yarn/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/Users/joshua/.yarn/lib/cli.js:30281:17)
+  Error: https://registry.yarnpkg.com/vapor-js: You cannot publish over the previously published versions: 0.0.32.
+      at Request.params.callback [as _callback] (/Users/joshua/.yarn/lib/cli.js:65019:18)
+      at Request.self.callback (/Users/joshua/.yarn/lib/cli.js:132430:22)
       at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:925:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (/Users/joshua/.yarn/lib/cli.js:133413:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at Gunzip.<anonymous> (/Users/joshua/.yarn/lib/cli.js:133333:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
